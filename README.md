@@ -2,241 +2,98 @@
 <img src="https://i.imgur.com/Clzj7Xs.png" alt="osTicket logo"/>
 </p>
 
-osTicket Deployment on Azure (Windows Server + Windows 10 Client)
-Project Overview
+# osTicket Deployment on Azure (Windows Server + Windows 10)
 
-This project demonstrates deploying osTicket on a Windows Server VM hosted in Microsoft Azure.
+## Overview
 
-The environment simulates a real-world enterprise setup:
+This project demonstrates how to deploy osTicket on a Windows Server virtual machine hosted in Microsoft Azure, using IIS, PHP, and MySQL. A Windows 10 virtual machine is used to simulate a client accessing the help desk system.
 
-Windows Server 2022 (Web Server)
+This lab demonstrates real-world enterprise concepts including web server configuration, database integration, client-server communication, and Azure virtual networking.
 
-IIS (Microsoft Web Server)
+---
 
-PHP (FastCGI)
+## Environments and Technologies Used
 
-MySQL Database
+- Microsoft Azure (Virtual Machines / Virtual Network)
+- Windows Server 2022
+- Windows 10
+- Internet Information Services (IIS)
+- PHP (FastCGI)
+- MySQL Server
+- Remote Desktop Protocol (RDP)
+- HTTP / TCP-IP
 
-Windows 10 Client VM (User Simulation)
+---
 
-Architecture
-Azure Virtual Network
-│
-├── Windows Server 2022 VM
-│     ├── IIS (Web Server)
-│     ├── PHP
-│     ├── MySQL
-│     └── osTicket
-│
-└── Windows 10 VM (Client)
-      └── Web Browser → Access Helpdesk
-1. Azure Virtual Machine Deployment
-Create Windows Server VM
+## Operating Systems Used
 
-Configuration:
+- Windows Server 2022 Datacenter
+- Windows 10 Pro
 
-Image: Windows Server 2022 Datacenter
+---
 
-Size: Standard B2s
+## Architecture
 
-Inbound ports:
+Azure Virtual Network  
 
-3389 (RDP)
+Windows Server 2022 VM  
+IIS Web Server  
+PHP Runtime  
+MySQL Database  
+osTicket Application  
 
-80 (HTTP)
+Windows 10 VM  
+Web Browser Client Access  
 
-Place inside a Virtual Network
+---
 
-Create Windows 10 Client VM
+## Deployment and Configuration Steps
 
-Image: Windows 10 Pro
+### Step 1: Create Azure Virtual Machines
 
-Same Virtual Network as Server
+#### Windows Server VM
 
-Allow RDP (3389)
+<img width="796" height="359" alt="image" src="https://github.com/user-attachments/assets/94294fce-41a3-4187-bb1d-662ba41c92e0" />
 
-This VM simulates an internal user accessing the helpdesk system.
+- Image: Windows Server 2022 Datacenter  
+- Size: Standard B2s  
+- Open inbound ports:
+  - 3389 (RDP)
+  - 80 (HTTP)  
+- Place inside a Virtual Network  
 
-2. Install IIS (Web Server Role)
+#### Windows 10 VM
 
-Log into Windows Server via RDP.
+- Image: Windows 10 Pro  
+- Place in the same Virtual Network  
+- Allow RDP (3389)  
 
-Open:
+---
 
-Server Manager → Add Roles and Features
+### Step 2: Install IIS (Web Server)
 
-Select:
+1. RDP into Windows Server VM.
+2. Open Server Manager.
+3. Click Add Roles and Features.
+4. Select:
+   - Web Server (IIS)
+   - CGI (under Application Development)
+5. Install and verify by browsing: http://localhost
+6. The IIS default page should load.
 
-Web Server (IIS)
+---
 
-CGI (under Application Development)
+### Step 3: Install PHP
 
-Verify installation:
+1. Download PHP for Windows from the official PHP website.
+2. Extract files to: C:\PHP
+3. Open IIS Manager.
+4. Go to Handler Mappings.
+5. Click Add Module Mapping.
 
-http://localhost
-
-The default IIS page should load.
-
-3. Install PHP (FastCGI Configuration)
-
-Download PHP from:
-
-https://windows.php.net
-
-Extract to:
-
-C:\PHP
-Configure IIS for PHP
-
-Open IIS Manager
-
-Navigate to: Handler Mappings
-
-Select: Add Module Mapping
-
-Use the following configuration:
-
+Configure:
 Request Path: *.php
 Module: FastCgiModule
 Executable: C:\PHP\php-cgi.exe
-Name: PHP_via_FastCGI
-
-Restart IIS:
-
-iisreset
-4. Install MySQL
-
-Download MySQL Installer:
-
-https://dev.mysql.com
-
-Install:
-
-MySQL Server
-
-Configure root password
-
-Port: 3306 (default)
-
-5. Create Database for osTicket
-
-Open MySQL Command Line Client and run:
-
-CREATE DATABASE osticket;
-
-CREATE USER 'osticketuser'@'localhost'
-IDENTIFIED BY 'StrongPassword123!';
-
-GRANT ALL PRIVILEGES ON osticket.*
-TO 'osticketuser'@'localhost';
-
-FLUSH PRIVILEGES;
-6. Deploy osTicket
-
-Download latest release:
-
-https://github.com/osTicket/osTicket
-
-Extract the contents.
-
-Move the upload folder to:
-
-C:\inetpub\wwwroot\osticket
-
-Rename the configuration file:
-
-include\ost-sampleconfig.php
-
-to:
-
-include\ost-config.php
-7. Configure NTFS Permissions
-
-Right-click the osticket folder
-
-Select Properties → Security
-
-Add:
-
-IIS_IUSRS
-
-Grant the following permissions:
-
-Modify
-
-Read & Execute
-
-Write
-
-8. Enable Required PHP Extensions
-
-Open:
-
-C:\PHP\php.ini
-
-Uncomment (remove ;):
-
-extension=php_imap
-extension=php_intl
-extension=php_mbstring
-extension=php_mysqli
-
-Restart IIS:
-
-iisreset
-9. Complete Web Installation
-
-From the Windows Server VM or Windows 10 Client VM, open:
-
-http://<server-private-ip>/osticket
-
-Enter:
-
-Database Name: osticket
-Username: osticketuser
-Password: StrongPassword123!
-
-Create the admin account and complete installation.
-
-10. Post-Installation Security
-
-Delete setup directory:
-
-C:\inetpub\wwwroot\osticket\setup
-
-Set configuration file to Read-Only:
-
-C:\inetpub\wwwroot\osticket\include\ost-config.php
-Technologies Used
-
-Cloud Platform: Microsoft Azure
-
-Server OS: Windows Server 2022
-
-Client OS: Windows 10
-
-Web Server: IIS
-
-Scripting Language: PHP
-
-Database: MySQL
-
-Application: osTicket
-
-Protocols: HTTP, TCP/IP, RDP
-
-Skills Demonstrated
-
-Azure VM provisioning
-
-Windows Server administration
-
-IIS configuration and FastCGI setup
-
-MySQL database configuration
-
-NTFS permission management
-
-Client-server networking within Azure VNet
-
-Web application deployment in Windows environment
+Name: PHP_FastCGI
+Restart IIS: iisrestart

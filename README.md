@@ -77,6 +77,8 @@ This lab demonstrates real-world enterprise concepts including web server config
 
 ### Step 2: Install IIS (Web Server)
 
+<img width="402" height="237" alt="image" src="https://github.com/user-attachments/assets/07df6954-6c84-431c-b2c0-0c8eef9afa2e" />
+
 1. RDP into Windows Server VM.
 2. Open Server Manager.
 3. Click Add Roles and Features.

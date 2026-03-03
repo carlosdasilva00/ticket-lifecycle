@@ -34,16 +34,21 @@ This lab demonstrates real-world enterprise concepts including web server config
 
 ## Architecture
 
-Azure Virtual Network  
+- Azure Virtual Network  
 
-Windows Server 2022 VM  
-IIS Web Server  
-PHP Runtime  
-MySQL Database  
-osTicket Application  
+- Windows Server 2022 VM  
 
-Windows 10 VM  
-Web Browser Client Access  
+- IIS Web Server  
+
+- PHP Runtime  
+
+- MySQL Database  
+
+- osTicket Application  
+
+- Windows 10 VM  
+
+- Web Browser Client Access  
 
 ---
 

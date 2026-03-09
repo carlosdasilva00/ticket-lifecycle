@@ -77,16 +77,22 @@ This lab demonstrates real-world enterprise concepts including web server config
 
 ### Step 2: Install IIS (Web Server)
 
-<img width="402" height="237" alt="image" src="https://github.com/user-attachments/assets/07df6954-6c84-431c-b2c0-0c8eef9afa2e" />
-
 1. RDP into Windows Server VM.
 2. Open Server Manager.
 3. Click Add Roles and Features.
 4. Select:
    - Web Server (IIS)
+
+   <img width="378" height="340" alt="image" src="https://github.com/user-attachments/assets/b90e27db-dc31-4782-b764-e63b741c93c1" />
+
    - CGI (under Application Development)
+
+     <img width="379" height="338" alt="image" src="https://github.com/user-attachments/assets/7c6cf50d-8fe2-40de-a0e8-74b5e101b0b0" />
+
 5. Install and verify by browsing: http://localhost
 6. The IIS default page should load.
+   <img width="778" height="588" alt="image" src="https://github.com/user-attachments/assets/02b442b1-9597-491f-857f-bab2331678f5" />
+
 
 ---
 
@@ -112,6 +118,8 @@ Restart IIS: iisrestart
 1. Download MySQL Installer.
 2. Install MySQL Server.
 3. Configure a strong root password.
+   <img width="456" height="348" alt="image" src="https://github.com/user-attachments/assets/e85eb94b-860c-4fe0-9227-41963bb91f7a" />
+
 4. Use default port 3306.
 
 ---
